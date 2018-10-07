@@ -2,12 +2,12 @@
 
 #include "Node.hpp"
 
-template<tyoename T>
+template<typename T>
 class Tree
 {
-    shared_ptr<Node<T>> head;
+    shared_ptr<Node<T>> head_;
 
-    unsigned int treeSize;
+    unsigned int treeSize_;
 
     public:
     Tree() :
@@ -20,3 +20,21 @@ class Tree
     void push();
 
 };
+
+template<typename T>
+shared_ptr<Node<T>> Tree::getHead() const noexcept
+{
+    return head_;
+}
+
+template<typename T>
+unsigned int Tree::getTreeSize() const noexcept
+{
+    return treeSize_;
+}
+
+template<typename T>
+void Tree::push()
+{
+
+}
