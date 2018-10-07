@@ -1,15 +1,17 @@
 #include <gtest/gtest.h>
-
+#include <memory>
 #include "Tree.hpp"
 
-struct testTree : ::testing::TEST
+using namespace std;
+
+struct testTree : public ::testing::Test
 {
     Tree<int> tr;
 };
 
 TEST_F(testTree, push_first_element_to_empty_list)
 {
-    shared_ptr<Tree<int>> node = make_shared<Tree<int>>(1001);
+   auto node = make_shared<Node<int>>(1001);
     
     ASSERT_EQ(tr.getTreeSize(), 0);
 
