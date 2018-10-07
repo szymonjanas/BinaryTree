@@ -10,10 +10,13 @@ class Tree
     unsigned int treeSize;
 
     public:
+    Tree() :
+        head(nullptr), treeSize(0) {}
+    ~Tree(){}
 
     shared_ptr<Node<T>> getHead() const noexcept;
     unsigned int getTreeSize() const noexcept;
 
     void push();
-    
+
 };
