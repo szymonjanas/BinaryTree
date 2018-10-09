@@ -11,15 +11,20 @@ class Tree
 
     unsigned int treeSize_;
 
-    public:
-    Tree() :
-        head_(nullptr), treeSize_(0) {}
-    ~Tree(){}
+public:
+    Tree()
+        :
+        head_(nullptr), treeSize_(0)
+    {}
+
+    ~Tree()
+    {}
 
     shared_ptr<Node<T>> getHead() const noexcept;
+
     unsigned int getTreeSize() const noexcept;
 
-    void push(shared_ptr<Node<T>>&);
+    void push(shared_ptr<Node<T>> node);
 
 };
 
@@ -36,11 +41,32 @@ unsigned int Tree<T>::getTreeSize() const noexcept
 }
 
 template<typename T>
-void Tree<T>::push(shared_ptr<Node<T>>& node)
+void Tree<T>::push(shared_ptr<Node<T>> node)
 {
-    if (head_ == nullptr)
-    {
+    weak_ptr<Node<T>> current (head_);
+
+    if (head_ == nullptr) {
         head_ = node;
         treeSize_++;
+        return;
+    }
+
+    while (current.lock() != nullptr) {
+        if (current.lock()->value > node->value) {
+            if (current.lock()->left.lock() == nullptr) {
+                current.lock()->left;
+                treeSize_++;
+                return;
+            }
+            else current = current.lock()->left;
+        }
+        if (current.lock()->value < node->value) {
+            if (current.lock()->right.lock() == nullptr) {
+                current.lock()->right = node;
+                treeSize_++;
+                return;
+            }
+            else current = current.lock()->right;
+        }
     }
 }
