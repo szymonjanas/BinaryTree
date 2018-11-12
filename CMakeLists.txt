@@ -37,7 +37,7 @@ add_compile_options(-c
         -g
         )
 
-project(BinaryTree)
+project(BinaryTree CXX)
 
 include_directories(inc)
 add_executable(${PROJECT_NAME} src/main.cpp)
@@ -45,6 +45,7 @@ add_executable(${PROJECT_NAME} src/main.cpp)
 set(TEST_SRC_LIST
         test/mainTest.cpp
         test/treeTest.cpp
+        test/treeAlgorithmTest.cpp
         )
 
 link_libraries(gtest)
