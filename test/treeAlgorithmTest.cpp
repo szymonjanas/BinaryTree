@@ -9,39 +9,30 @@ using namespace std;
 struct testTree: public ::testing::Test
 {
     Tree<int> tr;
-    vector<shared_ptr<Node<int>>> data;
-    vector<int> addElementsToTree(unsigned int howMany)
-    {
-        vector<int> vec;
-        for (unsigned int i = 0; i < howMany; i++) {
-            auto node = make_shared<Node<int>>(i);
-            data.push_back(node);
-            tr.push(node);
-            vec.push_back(i);
-        }
-        return vec;
-    }
-
 };
 
 TEST_F(testTree, traversalTest)
 {
-    vector<shared_ptr<Node<int>>> empty_data(treeAlgorithms::treeTraversal<int>(tr.getHead()));
-    ASSERT_EQ(empty_data.size(), 0);
+    auto node1 = make_shared<Node<int>>(0);
+    tr.push(node1);
+    auto node2 = make_shared<Node<int>>(1);
+    tr.push(node2);
+    auto node3 = make_shared<Node<int>>(2);
+    tr.push(node3);
+    auto node4 = make_shared<Node<int>>(3);
+    tr.push(node4);
+    auto node5 = make_shared<Node<int>>(4);
+    tr.push(node5);
 
-    unsigned int howMany = 20;
-    vector<int> vec(addElementsToTree(howMany));
     vector<shared_ptr<Node<int>>> data(treeAlgorithms::treeTraversal<int>(tr.getHead()));
 
-    ASSERT_EQ(tr.getTreeSize(), 20);
-    ASSERT_EQ(vec[4], 4);
-    ASSERT_EQ(20, data.size());
-    ASSERT_EQ(vec[4], data[4]->value);
+    ASSERT_EQ(tr.size(), 5);
+    ASSERT_EQ(5, data.size());
 
     bool checker = true;
-    for (unsigned int i = 0; i < howMany-1; i++)
+    for (int i = 0; i < 5; i++)
     {
-        if (vec[i] != data[i]->value) checker = false;
+        if (i != data[i]->value) checker = false;
     }
     ASSERT_TRUE(checker);
 }

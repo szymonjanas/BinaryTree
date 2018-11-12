@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Node.hpp"
+#include <queue>
 
 using namespace std;
 
@@ -22,9 +23,12 @@ public:
 
     shared_ptr<Node<T>> getHead() const noexcept;
 
-    unsigned int getTreeSize() const noexcept;
+    unsigned int size() const noexcept;
 
     void push(shared_ptr<Node<T>> node);
+
+    bool clear();
+
 
 };
 
@@ -35,7 +39,7 @@ shared_ptr<Node<T>> Tree<T>::getHead() const noexcept
 }
 
 template<typename T>
-unsigned int Tree<T>::getTreeSize() const noexcept
+unsigned int Tree<T>::size() const noexcept
 {
     return treeSize_;
 }
@@ -69,4 +73,23 @@ void Tree<T>::push(shared_ptr<Node<T>> node)
             else current = current.lock()->right;
         }
     }
+}
+
+template<typename T>
+bool Tree<T>::clear()
+{
+    shared_ptr<Node<T>> ptr = head_;
+    queue<shared_ptr<Node<T>>> que;
+    que.push(ptr);
+
+    while (!que.empty()) {
+        ptr = que.front();
+        que.pop();
+
+        if (ptr->left.lock() != nullptr) que.push(ptr->left.lock());
+        if (ptr->right.lock() != nullptr) que.push(ptr->right.lock());
+        if (ptr != nullptr) ptr.reset();
+        --treeSize_;
+    }
+    return true;
 }
