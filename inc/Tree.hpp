@@ -58,7 +58,7 @@ void Tree<T>::push(shared_ptr<Node<T>> node)
     while (current.lock() != nullptr) {
         if (current.lock()->value > node->value) {
             if (current.lock()->left.lock() == nullptr) {
-                current.lock()->left;
+                current.lock()->left = node;
                 treeSize_++;
                 return;
             }
@@ -91,5 +91,6 @@ bool Tree<T>::clear()
         if (ptr != nullptr) ptr.reset();
         --treeSize_;
     }
+    head_ = nullptr;
     return true;
 }
