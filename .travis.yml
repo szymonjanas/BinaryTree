@@ -29,4 +29,5 @@ script:
   - make
   - ./BinaryTree
   - ./BinaryTree-ut
-  - valgrind --leak-check=full --show-leak-kinds=all -v ./BinaryTree
+  - valgrind --leak-check=full ./BinaryTree
+  - valgrind --leak-check=full ./BinaryTree-ut
